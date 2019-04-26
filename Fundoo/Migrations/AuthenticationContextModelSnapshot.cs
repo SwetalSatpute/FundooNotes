@@ -33,7 +33,7 @@ namespace Fundoo.Migrations
                     b.Property<string>("NormalizedName")
                         .HasMaxLength(256);
 
-                    b.HasKey("Id");
+                    b.HasKey("Id"); 
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
