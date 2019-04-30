@@ -1,8 +1,13 @@
-﻿
+﻿//-----------------------------------------------------------------------
+// <copyright file="EmailService.cs" company="BridgeLabz">
+//     Company copyright tag.
+// </copyright>
+//-----------------------------------------------------------------------
 using System;
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using Fundoo.Common.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
 
@@ -10,20 +15,20 @@ using Microsoft.Extensions.Options;
 /// Email service class implement interface
 /// </summary>
 /// <seealso cref="FundooNotes.Interfaces.IEmailSender" />
-public class EmailService : IEmailSender
+public class EmailService : Fundoo.Common.Models.IEmailSender
 {
     /// <summary>
     /// The email settings
     /// </summary>
-    private readonly EmailSettings emailSettings;
+    private readonly EmailModel emailSetting;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="EmailService"/> class.
     /// </summary>
     /// <param name="emailSettings">The email settings.</param>
-    public EmailService(IOptions<EmailSettings> emailSettings)
+    public EmailService(IOptions<EmailModel> emailSettings)
     {
-        this.emailSettings = emailSettings.Value;
+        this.emailSetting = emailSettings.Value;
     }
 
     /// <summary>
@@ -40,10 +45,10 @@ public class EmailService : IEmailSender
     {
         try
         {
-            var credentials = new NetworkCredential(this.emailSettings.UserID, this.emailSettings.Password);
+            var credentials = new NetworkCredential(this.emailSetting.UserID, this.emailSetting.Password);
             var mail = new MailMessage()
             {
-                From = new MailAddress(this.emailSettings.UserID, this.emailSettings.FromAddress),
+                From = new MailAddress(this.emailSetting.UserID, this.emailSetting.FromAddress),
                 Subject = subject,
                 Body = message,
                 IsBodyHtml = true
@@ -52,10 +57,10 @@ public class EmailService : IEmailSender
 
             var client = new SmtpClient()
             {
-                Port = this.emailSettings.SMTPPort,
+                Port = this.emailSetting.SMTPPort,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
                 UseDefaultCredentials = false,
-                Host = this.emailSettings.SmtpClient,
+                Host = this.emailSetting.SmtpClient,
                 EnableSsl = true,
                 Credentials = credentials
             };

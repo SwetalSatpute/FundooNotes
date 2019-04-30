@@ -1,9 +1,8 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="ApplicationSettings.cs" company="BridgeLabz">
+// <copyright file="IEmailSender.cs" company="BridgeLabz">
 //     Company copyright tag.
 // </copyright>
 //-----------------------------------------------------------------------
-
 namespace Fundoo.Common.Models
 {
     using System;
@@ -12,16 +11,17 @@ namespace Fundoo.Common.Models
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Application Setting
+    /// IEmailSender
     /// </summary>
-    public class ApplicationSettings
+    public interface IEmailSender
     {
         /// <summary>
-        /// Gets or sets the JWT secret.
+        /// Sends the email asynchronous.
         /// </summary>
-        /// <value>
-        /// The JWT secret.
-        /// </value>
-        public string JWT_Secret { get; set; }
+        /// <param name="email">The email.</param>
+        /// <param name="subject">The subject.</param>
+        /// <param name="message">The message.</param>
+        /// <returns></returns>
+        Task SendEmailAsync(string email, string subject, string message);
     }
 }

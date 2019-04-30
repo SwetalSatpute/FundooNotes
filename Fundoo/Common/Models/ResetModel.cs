@@ -1,9 +1,9 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="ApplicationUserModel.cs" company="BridgeLabz">
+// <copyright file="ResetModel.cs" company="BridgeLabz">
 //     Company copyright tag.
 // </copyright>
 //-----------------------------------------------------------------------
-namespace Fundoo.Models
+namespace Fundoo.Common.Models
 {
     using System;
     using System.Collections.Generic;
@@ -11,18 +11,10 @@ namespace Fundoo.Models
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Application User Model
+    /// ResetModel
     /// </summary>
-    public class ApplicationUserModel
+    public class ResetModel
     {
-        /// <summary>
-        /// Gets or sets the name of the user.
-        /// </summary>
-        /// <value>
-        /// The name of the user.
-        /// </value>
-        public string UserName { get; set; }
-
         /// <summary>
         /// Gets or sets the email.
         /// </summary>
@@ -30,9 +22,9 @@ namespace Fundoo.Models
         /// The email.
         /// </value>
         public string Email { get; set; }
-
+        
         /// <summary>
-        /// Gets or sets the password.
+        /// Gets or sets the pasword.
         /// </summary>
         /// <value>
         /// The password.
@@ -40,11 +32,11 @@ namespace Fundoo.Models
         public string Password { get; set; }
 
         /// <summary>
-        /// Gets or sets the full name.
+        /// Gets or sets the confirm password.
         /// </summary>
         /// <value>
-        /// The full name.
+        /// The confirm password.
         /// </value>
-        public string FullName { get; set; }
+        public string ConfirmPassword { get; set; }
     }
 }

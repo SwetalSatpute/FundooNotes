@@ -1,24 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.AspNetCore.Identity;
-using Fundoo.Models;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using Fundoo.Common.Models;
-
+﻿//-----------------------------------------------------------------------
+// <copyright file="StartUp.cs" company="BridgeLabz">
+//     Company copyright tag.
+// </copyright>
+//-----------------------------------------------------------------------
 namespace Fundoo
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Options;
+    using Microsoft.AspNetCore.Identity;
+    using Fundoo.Models;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using System.Text;
+    using Microsoft.IdentityModel.Tokens;
+    using Fundoo.Common.Models;
+
+    /// <summary>
+    /// Startup
+    /// </summary>
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -28,13 +36,10 @@ namespace Fundoo
 
         public IConfiguration Configuration { get; }
 
-
-        
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        //// This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //inject AppSettings
+            ////inject AppSettings
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
@@ -47,17 +52,17 @@ namespace Fundoo
                 Options.Password.RequireNonAlphanumeric = false;
                 Options.Password.RequireLowercase = false;
                 Options.Password.RequireUppercase = false;
-            }
-                );
+            });
             services.AddCors();
-            //Jwt Authentication
+
+            ////Jwt Authentication
             var key = Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:JWT_Secret"].ToString());
             services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            }).AddJwtBearer(x=>
+            }).AddJwtBearer(x =>
             {
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = false;
@@ -68,13 +73,10 @@ namespace Fundoo
                     ValidateIssuer = false,
                     ValidateAudience = false,
                     ClockSkew = TimeSpan.Zero
-
-
                 };
             });
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        //// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
